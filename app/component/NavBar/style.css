@@ -9,7 +9,7 @@
   .navbar__item {
     --_offset: 0.2rem;
     padding: 0.5rem 1rem;
-    text-decoration: underline;
+    text-decoration: none;
     text-decoration-thickness: 0.1rem;
     text-underline-offset: var(--_offset);
     cursor: pointer;
@@ -17,5 +17,9 @@
     &:hover {
       --_offset: 0.5rem;
     }
+  }
+
+  .navbar__list {
+    display: flex;
   }
 }
