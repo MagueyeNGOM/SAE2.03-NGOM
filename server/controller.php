@@ -25,3 +25,23 @@ function readMoviesController(){
     $movies = getAllMovies();
     return $movies;
 }
+
+function addMovieController(){
+    $name        = $_POST['film'];
+    $year        = $_POST['annee'];
+    $length      = $_POST['duree'];
+    $description = $_POST['description'] ?? '';
+    $director    = $_POST['director'] ?? '';
+    $id_category = $_POST['jour'];
+    $image       = $_POST['nomfichier'];
+    $trailer     = $_POST['url'];
+    $min_age     = $_POST['age'];
+
+    $ok = insertMovie($name, $year, $length, $description, $director, $id_category, $image, $trailer, $min_age);
+
+    if($ok){
+        return ["message" => "Film ajouté avec succès !"];
+    } else {
+        return false;
+    }
+}

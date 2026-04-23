@@ -1,4 +1,6 @@
+
 <?php
+
 /** ARCHITECTURE PHP SERVEUR : Rôle du fichier script.php
  * 
  * Ce fichier est celui à qui on adresse toutes les requêtes HTTP.
@@ -57,6 +59,11 @@ if ( isset($_REQUEST['todo']) ){
       break;
 
 
+      case 'addmovie':
+      $data = addMovieController();
+      break;
+
+
     default: // il y a un paramètre todo mais sa valeur n'est pas reconnue/supportée
       echo json_encode('[error] Unknown todo value');
       http_response_code(400); // 400 == "Bad request"
@@ -102,3 +109,4 @@ http_response_code(404); // 404 == "Not found"
 
 
 ?>
+
