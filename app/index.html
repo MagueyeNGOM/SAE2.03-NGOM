@@ -12,17 +12,23 @@
 
     <section id="content"></section>
 
-
     <script type="module">
       import { NavBar } from "./component/NavBar/script.js";
       import { Movie } from "./component/Movie/script.js";
       import { DataMovie } from "./data/dataMovie.js";
+      import { MovieDetail } from "./component/MovieDetail/script.js";
 
+      let moviesArray = await DataMovie.requestMovies();
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
       // Une fois l'application terminée, on pourrait remettre let C.
       window.C = {};
+
+      C.handlerDetail = async function (id) {
+        let movieData = await DataMovie.requestMovieDetails(id);
+        V.renderMovieDetail(movieData);
+      };
 
       C.handlerAbout = function () {
         alert(
@@ -30,21 +36,9 @@
         );
       };
 
-
       C.start = function () {
         V.renderNavBar("C.handlerAbout()");
-      };
-
-      C.start = async function () {
-
-        V.renderNavBar("C.handlerAbout()");
-
-
-        let moviesArray = await DataMovie.requestMovies();
-
         V.renderMovies(moviesArray);
-
-
       };
 
       // Vue (contient tout ce qui est relatif à l'affichage)
@@ -67,8 +61,12 @@
         content.innerHTML = Movie.format(moviesArray);
       };
 
+      V.renderMovieDetail = function (movieData) {
+        let content = document.querySelector("#content");
+        content.innerHTML = MovieDetail.format(movieData);
+      };
 
-      C.start(); 
+      C.start();
     </script>
   </body>
 </html>

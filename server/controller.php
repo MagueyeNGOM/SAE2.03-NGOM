@@ -9,6 +9,12 @@ function readMoviesController(){
     return $movies;
 }
 
+function readMovieDetailsController(){
+    $id = $_REQUEST['id'];
+    $movies = getAllMovies($id);
+    return $movies;
+}
+
 function addMoviesController(){
    
   $name = $_REQUEST['name'];

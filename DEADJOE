@@ -1,0 +1,31 @@
+
+*** These modified files were found in JOE when it aborted on Fri Apr 24 13:12:02 2026
+*** JOE was aborted by UNIX signal 1
+
+*** Fichier '(Sans nom)'
+/home/etudiants/ngom14/public_html/SAE2.03-NGOM/.git/COMMIT_EDITMSG
+
+*** Fichier '/home/etudiants/ngom14/public_html/SAE2.03-NGOM/.git/COMMIT_EDITMSG'
+
+
+# Veuillez saisir le message de validation pour vos modifications. Les lignes
+# commençant par '#' seront ignorées, et un message vide abandonne la validation.
+#
+# Validateur : Ngom Magueye <ngom14@mmi-dev.unilim.fr>
+#
+# Sur la branche master
+# Votre branche est à jour avec 'origin/master'.
+#
+# Modifications qui seront validées :
+#	modifié :         admin/component/MovieForm/template.html
+#	modifié :         admin/data/dataMovie.js
+#	modifié :         admin/index.html
+#	modifié :         server/controller.php
+#	nouveau fichier : server/images/mono.webp
+#	modifié :         server/model.php
+#	modifié :         server/script.php
+#
+
+*** Fichier '* Startup Log *'
+Traitement de '/etc/joe/editorrc'...Traitement de '/etc/joe/ftyperc'...Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
