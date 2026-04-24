@@ -1,51 +1,65 @@
-<div class="addMenu">
-  <h4 class="addMenu__title"># Ajouter ou modifier un film</h4>
-  <form class="addMenu__form">
-      <select name="jour">
-        <option value="1">Action</option>
-        <option value="2">Comédie</option>
-        <option value="3">Drame</option>
-        <option value="4">Science-fiction</option>
-        <option value="5">Animation</option>
-        <option value="6">Thriller</option>
-        <option value="7">Horreur</option>
-        <option value="8">Aventure</option>
-        <option value="9">Fantaisie</option>
-        <option value="10">Documentaire</option>
-      </select>
-    </select>
-
+<div class="addMovie">
+  <form class="addMovie__form">
     <input
       required
       type="text"
-      name="film"
+      name="name"
       placeholder="Saisir le titre du film"
     />
 
     <input
       required
       type="text"
-      name="annee"
+      name="year"
       placeholder="Saisir l'année de sortie"
     />
 
-    <input required type="text" name="duree" placeholder="Saisir la durée" />
+    <input required type="text" name="length" placeholder="Saisir la durée" />
 
     <input
       required
       type="text"
-      name="nomfichier"
+      name="image"
       placeholder="Saisir le nom du fichier"
     />
 
     <input
       required
       type="text"
-      name="url"
+      name="trailer"
       placeholder="Saisir l'url du fichier"
     />
 
-    <input required type="text" name="age" placeholder="Saisir l'age minimum" />
+    <input
+      required
+      type="text"
+      name="director"
+      placeholder="Réalisateur du film"
+      pattern="[^0-9]*"
+      title="Numbers are not allowed"
+    />
+
+    <input required type="text" name="description" placeholder="description" />
+
+    <input
+      required
+      type="text"
+      name="min_age"
+      placeholder="Saisir l'age minimum"
+    />
+
+    <select required name="id_category">
+      <option value="1">Action</option>
+      <option value="2">Comédie</option>
+      <option value="3">Drame</option>
+      <option value="4">Science-fiction</option>
+      <option value="5">Animation</option>
+      <option value="6">Thriller</option>
+      <option value="7">Horreur</option>
+      <option value="8">Aventure</option>
+      <option value="9">Fantaisie</option>
+      <option value="10">Documentaire</option>
+    </select>
 
     <input onclick="{{handler}}" type="button" value="Update" name="todo" />
   </form>

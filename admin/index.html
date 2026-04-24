@@ -18,19 +18,20 @@
       window.C = {};
 
       C.handlerAddMovie = async function () {
-        let form = document.querySelector("form");
+        let form = document.querySelector('.addMovie__form');
+        if (form.reportValidity()) {
         let fdata = new FormData(form);
-        V.renderLog("Envoi du film en cours...");
-        let reponse = await DataMovie.add(fdata);
-        V.renderLog("Serveur : " + reponse.message);
+        let reponse = await DataMovie.addmovies(fdata);
+        V.renderLog(reponse);
+        }
+
       };
 
       C.start = function () {
         V.renderLog("Chargement des films en cours...");
-        V.renderLog("Films chargés avec succès !");
-
-        V.renderMovieForm();
+        V.renderMovieForm("C.handlerAddMovie()");
       };
+
 
       window.V = {};
 
@@ -39,9 +40,9 @@
         content.innerHTML = Log.format(message);
       };
 
-      V.renderMovieForm = function () {
+      V.renderMovieForm = function (handler) {
         let content = document.querySelector("#content");
-        content.innerHTML += MovieForm.format("C.handlerAddMovie()");
+        content.innerHTML += MovieForm.format(handler);
       };
 
       C.start();
