@@ -48,7 +48,6 @@ function addMovie($name, $director, $year, $length, $description, $id_category, 
     // Exécute la requête SQL
     $stmt->execute();
     // Récupère les résultats de la requête sous forme d'objets
-    $res = $stmt->fetchAll(PDO::FETCH_OBJ);
-    return $res; // Retourne les résultats
+    return $stmt->rowCount();
 }
 
