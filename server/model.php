@@ -28,13 +28,13 @@ function getAllMovies(){
 }
 
 
-function getMovieDetails(){
+function getMovieDetails($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "select * from movie where id = id";
+    $sql = "SELECT * FROM Movie where id = :id";
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_OBJ);
+    return $stmt->fetch(PDO::FETCH_OBJ);
 }
 
 function addMovie($name, $director, $year, $length, $description, $id_category, $image, $trailer, $min_age){

@@ -27,6 +27,7 @@
 
       C.handlerDetail = async function (id) {
         let movieData = await DataMovie.requestMovieDetails(id);
+        console.log("Données reçues du serveur :", movieData);
         V.renderMovieDetail(movieData);
       };
 

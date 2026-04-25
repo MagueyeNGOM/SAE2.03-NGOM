@@ -11,7 +11,7 @@ function readMoviesController(){
 
 function readMovieDetailsController(){
     $id = $_REQUEST['id'];
-    $movies = getAllMovies($id);
+    $movies = getMovieDetails($id);
     return $movies;
 }
 
