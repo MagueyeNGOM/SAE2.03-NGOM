@@ -3,10 +3,28 @@
 
 require("model.php");
 
+/*
+
 function readMoviesController(){
  
     $movies = getAllMovies();
     return $movies;
+}
+*/
+
+function readMoviesController(){
+ 
+    $movies = getAllMovies();
+    $group = [];
+    foreach($movies as $m){
+      $categoryName = $m->nom_categorie;
+      if (!isset($group[$categoryName])){
+        $group[$categoryName] = [];
+      }
+        $group[$categoryName][] = $m;
+
+    }
+    return $group;
 }
 
 function readMovieDetailsController(){

@@ -21,7 +21,9 @@ define("DBPWD", "ngom14");
 
 function getAllMovies(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "select id, name, image from Movie";
+    $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS nom_categorie
+            FROM Movie, Category 
+            WHERE Movie.id_category = Category.id";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
