@@ -1,6 +1,10 @@
 <?php
-ini_set('display_errors', 1);
+// Activer le rapport d'erreurs PHP
 error_reporting(E_ALL);
+
+// Forcer l'affichage des erreurs à l'écran
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 require("controller.php");
 
@@ -21,6 +25,22 @@ if ( isset($_REQUEST['todo']) ){
         
       case 'readmoviedetails':
         $data = readMovieDetailsController();
+        break;
+
+      case 'readcategory':
+        $data = readCategory();
+        break;
+
+      case 'readage':
+        $data = readAge();
+        break;
+
+      case 'addprofile':
+        $data = addProfileController();
+        break;
+
+      case 'readprofile':
+        $data = readProfile();
         break;
 
       default:

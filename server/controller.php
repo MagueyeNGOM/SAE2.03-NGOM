@@ -13,7 +13,6 @@ function readMoviesController(){
 */
 
 function readMoviesController(){
- 
     $movies = getAllMovies();
     $group = [];
     foreach($movies as $m){
@@ -25,6 +24,23 @@ function readMoviesController(){
 
     }
     return $group;
+}
+
+function readProfile(){
+  $profile = getProfile();
+  return $profile;
+}
+
+
+function readCategory(){
+  $category = getCategory();
+  return $category;
+}
+
+
+function readAge(){
+  $age = getAge();
+  return $age;
 }
 
 function readMovieDetailsController(){
@@ -53,4 +69,27 @@ function addMoviesController(){
   else{
     return false;
   }
+}
+
+
+function addProfileController(){
+  // On récupère le nom
+  $name = $_REQUEST['name'];
+  
+  // On récupère l'âge (Attention : ton HTML envoie 'id_age' !)
+  $age_restriction = $_REQUEST['age_restriction'];
+
+  // L'avatar n'existe pas dans ton HTML, donc on force une case vide pour que MySQL soit content
+  $avatar = ""; 
+
+  // On envoie à la BDD
+  $ok = addProfile($name, $avatar, $age_restriction);
+  
+  if ($ok != 0){
+    return "Le profil $name a été ajouté avec succès !";
+  }
+  else{
+    return false;
+  }
+
 }

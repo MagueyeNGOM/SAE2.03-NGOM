@@ -5,4 +5,10 @@
     <li class="navbar__item" onclick="{{hNouveautés}}">Nouveautés</li>
     <li class="navbar__item" onclick="{{hTrending}}">Trending</li>
   </ul>
+  <div class="navbar__profile">
+    <select id="profile-select" onchange="{{handlerProfile}}">
+        <option value="">Se Connecter/Déconnecter</option>
+        {{optionsProfile}}
+    </select>
+  </div>
 </nav>

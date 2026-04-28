@@ -30,6 +30,34 @@ function getAllMovies(){
 }
 
 
+function getProfile(){
+        $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT name, age_restriction FROM Profile";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+
+function getCategory(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT * FROM Category";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+function getAge(){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT DISTINCT min_age FROM Movie ORDER BY min_age ASC";
+    $stmt = $cnx->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+
+
 function getMovieDetails($id){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT * FROM Movie where id = :id";
@@ -57,6 +85,25 @@ function addMovie($name, $director, $year, $length, $description, $id_category, 
     $stmt->bindParam(':image', $image);
     $stmt->bindParam(':trailer', $trailer);
     $stmt->bindParam(':min_age', $min_age);
+    // Exécute la requête SQL
+    $stmt->execute();
+    // Récupère les résultats de la requête sous forme d'objets
+    return $stmt->rowCount();
+}
+
+function addProfile( $name, $avatar, $age_restriction){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = "INSERT INTO Profile (name, avatar, age_restriction)
+            VALUES (:name, :avatar, :age_restriction)";
+    // Prépare la requête SQL
+    $stmt = $cnx->prepare($sql);
+
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':avatar', $avatar);
+    $stmt->bindParam(':age_restriction', $age_restriction);
+
     // Exécute la requête SQL
     $stmt->execute();
     // Récupère les résultats de la requête sous forme d'objets

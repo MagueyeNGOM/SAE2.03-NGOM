@@ -14,24 +14,36 @@
       import { Log } from "./component/Log/script.js";
       import { MovieForm } from "./component/MovieForm/script.js";
       import { DataMovie } from "./data/dataMovie.js";
+      import { DataProfile } from "./data/dataProfile.js";
+      import { ProfileForm } from "./component/ProfileForm/script.js";
 
       window.C = {};
 
       C.handlerAddMovie = async function () {
-        let form = document.querySelector('.addMovie__form');
+        let form = document.querySelector(".addMovie__form");
         if (form.reportValidity()) {
-        let fdata = new FormData(form);
-        let reponse = await DataMovie.addmovies(fdata);
-        V.renderLog(reponse);
+          let fdata = new FormData(form);
+          let reponse = await DataMovie.addmovies(fdata);
+          V.renderLog(reponse);
         }
-
       };
 
-      C.start = function () {
+      C.handlerAddProfile = async function () {
+        let form = document.querySelector(".addProfil__form");
+        if (form.reportValidity()) {
+          let fdata = new FormData(form);
+          let reponse = await DataProfile.addProfile(fdata);
+          V.renderLog(reponse);
+        }
+      };
+
+      C.start = async function () {
         V.renderLog("Chargement des films en cours...");
-        V.renderMovieForm("C.handlerAddMovie()");
+        let categories = await DataMovie.requestCategory();
+        V.renderMovieForm("C.handlerAddMovie()", categories);
+        let ages = await DataProfile.requestAge();
+        V.renderProfileForm("C.handlerAddProfile()", ages);
       };
-
 
       window.V = {};
 
@@ -40,9 +52,14 @@
         content.innerHTML = Log.format(message);
       };
 
-      V.renderMovieForm = function (handler) {
+      V.renderMovieForm = function (handler, categories) {
         let content = document.querySelector("#content");
-        content.innerHTML += MovieForm.format(handler);
+        content.innerHTML += MovieForm.format(handler, categories);
+      };
+
+      V.renderProfileForm = function (handler, agesArray) {
+        let content = document.querySelector("#content");
+        content.innerHTML += ProfileForm.format(handler, agesArray);
       };
 
       C.start();
