@@ -19,15 +19,21 @@ define("DBLOGIN", "ngom14");
 define("DBPWD", "ngom14");
 
 
-function getAllMovies(){
+function getAllMovies($age){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT Movie.id, Movie.name, Movie.image, Category.name AS nom_categorie
             FROM Movie, Category 
-            WHERE Movie.id_category = Category.id";
+            WHERE Movie.id_category = Category.id
+            AND Movie.min_age <= :age";
+
     $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age);
     $stmt->execute();
+    
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
+
+
 
 
 function getProfile(){

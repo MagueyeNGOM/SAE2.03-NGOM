@@ -16,7 +16,7 @@ NavBar.format = function (hAbout, hHome, profilesArray) {
     let temp = templateOption;
     let profil = profilesArray[i];
     temp = temp.replaceAll("{{profileName}}", profil.name);
-    temp = temp.replaceAll("{{profileName}}", profil.age_restriction);
+    temp = temp.replaceAll("{{age_restriction}}", profil.age_restriction);
     optionsHtml = optionsHtml + temp;
   }
   html = html.replace("{{optionsProfile}}", optionsHtml);

@@ -37,13 +37,21 @@
       C.changeProfile = async function () {
         let select = document.querySelector("#profile-select");
         window.activeProfile = select.value;
-        console.log(window.activeProfile);
+        let age = 0;
         if (window.activeProfile !== "") {
-          let moviesArray = await DataMovie.requestMovies(window.activeProfile);
-          V.renderMovies(moviesArray);
-        } else {
-          document.querySelector("#content").innerHTML = "";
+          let o = document.querySelector("option:checked");
+          age = o.getAttribute("data-age");
         }
+        let moviesArray = await DataMovie.requestMovies(age);
+        V.renderMovies(moviesArray);
+      };
+
+      C.start = async function () {
+        let profiles = await DataProfile.read();
+        V.renderNavBar("C.handlerAbout()", profiles);
+        let moviesArray = await DataMovie.requestMovies(0);
+        V.renderMovies(moviesArray);
+        document.querySelector("#content").innerHTML = "";
       };
 
       C.handlerAbout = function () {
@@ -55,13 +63,6 @@
       C.handlerHome = function () {
         document.querySelector("#content").innerHTML = "";
         C.start();
-      };
-
-      C.start = async function () {
-        let profiles = await DataProfile.read();
-        V.renderNavBar("C.handlerAbout()", profiles);
-        V.renderMovies(moviesArray);
-        document.querySelector("#content").innerHTML = "";
       };
 
       // Vue (contient tout ce qui est relatif à l'affichage)

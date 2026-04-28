@@ -13,7 +13,16 @@ function readMoviesController(){
 */
 
 function readMoviesController(){
-    $movies = getAllMovies();
+    // On fixe l'âge à 0 par défaut (0 = tous publics)
+    $age = 0; 
+    
+    // Si l'âge a bien été envoyé dans l'URL par le Front
+    if (isset($_REQUEST['age'])) {
+        $age = $_REQUEST['age'];
+    }
+    
+    $movies = getAllMovies($age);
+    
     $group = [];
     foreach($movies as $m){
       $categoryName = $m->nom_categorie;
@@ -21,7 +30,6 @@ function readMoviesController(){
         $group[$categoryName] = [];
       }
         $group[$categoryName][] = $m;
-
     }
     return $group;
 }
