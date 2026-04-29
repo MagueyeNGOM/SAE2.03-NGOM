@@ -46,7 +46,7 @@ DataMovie.addmovies = async function (fdata) {
         method: "POST",
         body: fdata
     };
-    let answer = await fetch(HOST_URL + "/server/script.php?todo=addmovies", config);
+    let answer = await fetch(HOST_URL + "/server/script.php?todo=addfavorite", config);
     let data = await answer.json();
     return data;
 }

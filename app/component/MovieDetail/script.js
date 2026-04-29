@@ -1,4 +1,3 @@
-// Remplace "template.html" par "templateLi.html"
 let templateFile = await fetch("./component/MovieDetail/templateLi.html"); 
 let template = await templateFile.text();
 

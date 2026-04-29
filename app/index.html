@@ -19,6 +19,7 @@
       import { DataProfile } from "./data/dataProfile.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { MovieFav } from "./component/MovieFav/script.js";
 
       let moviesArray = await DataMovie.requestMovies();
       let profilActif = null;
@@ -64,6 +65,19 @@
         C.changeProfile();
       };
 
+ /* C.handlerAddFavorite = async function () {
+        let form = document.querySelector(".addFav__form");
+        document.querySelector("#id_profile_input").value = profilActif;
+
+        if (form.reportValidity()) {
+          let fdata = new FormData(form);
+          let reponse = await DataMovie.addFavorite(fdata);
+          V.renderLog(reponse);
+        }
+      };
+  */   
+
+
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
@@ -97,6 +111,17 @@
         let content = document.querySelector("#content");
         content.innerHTML = MovieDetail.format(movieData);
       };
+
+      V.renderMovieDetail = function (movieData) {
+        let content = document.querySelector("#content");
+        
+        let htmlDetail = MovieDetail.format(movieData);
+        let htmlFav = MovieFav.formatButton(movieData.id);
+        
+        content.innerHTML = htmlDetail + htmlFav;
+      };
+
+      
 
       C.start();
     </script>

@@ -23,4 +23,14 @@ DataMovie.requestMovieDetails = async function (id) {
   return data;
 }
 
+DataMovie.addFavorite = async function (fdata) {
+  let config = {
+      method: "POST",
+      body: fdata
+  };
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=addfavorite", config);
+  let data = await answer.json();
+  return data;
+};
+
 export { DataMovie };
