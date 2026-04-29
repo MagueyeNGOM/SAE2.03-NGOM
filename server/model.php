@@ -144,6 +144,24 @@ function checkFavorite($id_profile, $id_movie){
     return $stmt->fetchColumn();
 }
 
+
+function getFavorite($id_profile){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = " SELECT Movie.id, Movie.name, Movie.image, Category.name AS nom_categorie
+            FROM Movie, Category, Favorite 
+            WHERE Movie.id_category = Category.id
+            AND Movie.id = Favorite.id_movie
+            AND Favorite.id_profile = :id_profile";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
 function editProfile($id, $name, $age_restriction){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
  

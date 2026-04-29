@@ -12,6 +12,12 @@ function readMoviesController(){
 }
 */
 
+function readFavoritesController(){
+    $id_profile = $_REQUEST['id_profile'];
+    $favorites = getFavorite($id_profile);
+    return $favorites;
+}
+
 function readMoviesController(){
     $age = 0; 
     if (isset($_REQUEST['age'])) {

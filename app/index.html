@@ -31,8 +31,16 @@
 
       C.handlerDetail = async function (id) {
         let movieData = await DataMovie.requestMovieDetails(id);
-        console.log("Données reçues du serveur :", movieData);
-        V.renderMovieDetail(movieData);
+        let f = false;
+        if (profilActif !== null && profilActif !== "") {
+          let ff = await DataMovie.requestFavorite(profilActif);
+          for(let i = 0; i < ff.length; i++){
+            if (ff[i].id == id){
+              f = true;
+            }
+          }
+        }
+        V.renderMovieDetail(movieData, f);
       };
 
       C.changeProfile = async function () {
@@ -43,7 +51,16 @@
           let o = document.querySelector("option:checked");
           age = o.getAttribute("data-age");
         }
+        
         let moviesArray = await DataMovie.requestMovies(age);
+
+        if(profilActif !== ""){
+          let f = await DataMovie.requestFavorite(profilActif);
+
+          if(f.length > 0){
+            moviesArray[ "Mes Favoris"] = f;
+          }
+        }
         V.renderMovies(moviesArray);
       };
 
@@ -65,7 +82,7 @@
         C.changeProfile();
       };
 
- /* C.handlerAddFavorite = async function () {
+      C.handlerAddFavorite = async function () {
         let form = document.querySelector(".addFav__form");
         document.querySelector("#id_profile_input").value = profilActif;
 
@@ -75,8 +92,18 @@
           V.renderLog(reponse);
         }
       };
-  */   
 
+      /* C.handlerAddFavorite = async function () {
+        let form = document.querySelector(".addFav__form");
+        document.querySelector("#id_profile_input").value = profilActif;
+
+        if (form.reportValidity()) {
+          let fdata = new FormData(form);
+          let reponse = await DataMovie.addFavorite(fdata);
+          V.renderLog(reponse);
+        }
+      };
+  */
 
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
@@ -107,21 +134,18 @@
         content.innerHTML = finalHtml;
       };
 
-      V.renderMovieDetail = function (movieData) {
+      V.renderMovieDetail = function (movieData, f) {
         let content = document.querySelector("#content");
-        content.innerHTML = MovieDetail.format(movieData);
-      };
 
-      V.renderMovieDetail = function (movieData) {
-        let content = document.querySelector("#content");
-        
         let htmlDetail = MovieDetail.format(movieData);
-        let htmlFav = MovieFav.formatButton(movieData.id);
-        
+        let htmlFav = MovieFav.formatButton(movieData.id, f);
+
         content.innerHTML = htmlDetail + htmlFav;
       };
 
-      
+      V.renderLog = function (message) {
+        alert(message);
+      };
 
       C.start();
     </script>
