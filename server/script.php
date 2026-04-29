@@ -47,6 +47,10 @@ if ( isset($_REQUEST['todo']) ){
         $data = readProfile();
         break;
 
+      case 'addfavorite':
+        $data = addFavoriteController();
+        break;
+
       default:
         echo json_encode('[error] Unknown todo value');
         http_response_code(400);

@@ -21,12 +21,12 @@
       import { MovieCategory } from "./component/MovieCategory/script.js";
 
       let moviesArray = await DataMovie.requestMovies();
+      let profilActif = null;
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
       // Une fois l'application terminée, on pourrait remettre let C.
       window.C = {};
-      window.activeProfile = "";
 
       C.handlerDetail = async function (id) {
         let movieData = await DataMovie.requestMovieDetails(id);
@@ -36,9 +36,9 @@
 
       C.changeProfile = async function () {
         let select = document.querySelector("#profile-select");
-        window.activeProfile = select.value;
+        profilActif = select.value;
         let age = 0;
-        if (window.activeProfile !== "") {
+        if (profilActif !== "") {
           let o = document.querySelector("option:checked");
           age = o.getAttribute("data-age");
         }
@@ -51,7 +51,6 @@
         V.renderNavBar("C.handlerAbout()", profiles);
         let moviesArray = await DataMovie.requestMovies(0);
         V.renderMovies(moviesArray);
-        document.querySelector("#content").innerHTML = "";
       };
 
       C.handlerAbout = function () {
@@ -62,7 +61,7 @@
 
       C.handlerHome = function () {
         document.querySelector("#content").innerHTML = "";
-        C.start();
+        C.changeProfile();
       };
 
       // Vue (contient tout ce qui est relatif à l'affichage)

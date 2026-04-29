@@ -111,6 +111,39 @@ function addProfile( $name, $avatar, $age_restriction){
     return $stmt->rowCount();
 }
 
+
+function addFavorite($id_profile, $id_movie){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = "INSERT INTO Favorite  (id_profile, id_movie)
+            VALUES (:id_profile, :id_movie)";
+    $stmt = $cnx->prepare($sql);
+
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->bindParam(':id_movie', $id_movie);
+
+    $stmt->execute();
+    return $stmt->rowCount();
+}
+
+
+function checkFavorite($id_profile, $id_movie){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = "SELECT COUNT(*) FROM Favorite 
+            WHERE id_profile = :id_profile 
+            AND id_movie = :id_movie";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->bindParam(':id_movie', $id_movie);
+
+    $stmt->execute();
+    return $stmt->fetchColumn();
+}
+
 function editProfile($id, $name, $age_restriction){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
  

@@ -76,6 +76,29 @@ function addMoviesController(){
 }
 
 
+function addFavoriteController(){
+  $id_profile = $_REQUEST['id_profile'];
+  $id_movie = $_REQUEST['id_movie'];
+
+  $existe = checkFavorite($id_profile, $id_movie);
+  
+  if ($existe > 0){
+    return "Le film $id_movie est deja dans vos favoris !";
+  }
+  else{ 
+    $ok = addFavorite($id_profile, $id_movie);
+  }
+
+  if ($ok != 0){
+    return "Le film $id_movie a été ajouté avec succès !";
+  }
+  else{
+    return false;
+  }
+
+}
+
+
 function addProfileController(){
   $name = $_REQUEST['name'];
   
