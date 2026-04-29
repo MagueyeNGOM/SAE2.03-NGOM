@@ -16,6 +16,7 @@
       import { DataMovie } from "./data/dataMovie.js";
       import { DataProfile } from "./data/dataProfile.js";
       import { ProfileForm } from "./component/ProfileForm/script.js";
+      import { EditProfile } from "./component/EditProfile/script.js";
 
       window.C = {};
 
@@ -37,12 +38,24 @@
         }
       };
 
+      C.handlerEditProfile = async function () {
+        let form = document.querySelector(".editProfil__form");
+        if (form.reportValidity()) {
+          let fdd = new FormData(form);
+          let reponse = await DataProfile.editProfile(fdd);
+          V.renderLog(reponse);
+        }
+      };
+
       C.start = async function () {
         V.renderLog("Chargement des films en cours...");
         let categories = await DataMovie.requestCategory();
         V.renderMovieForm("C.handlerAddMovie()", categories);
         let ages = await DataProfile.requestAge();
         V.renderProfileForm("C.handlerAddProfile()", ages);
+        let profiles = await DataProfile.requestProfiles();
+        V.renderEditProfile("C.handlerEditProfile()", profiles, ages);
+
       };
 
       window.V = {};
@@ -62,6 +75,10 @@
         content.innerHTML += ProfileForm.format(handler, agesArray);
       };
 
+      V.renderEditProfile = function (handler, agesArray, profilesArray) {
+      let content = document.querySelector("#content");
+      content.innerHTML += EditProfile.format(handler,profilesArray, agesArray );
+    };
       C.start();
     </script>
   </body>

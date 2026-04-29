@@ -13,10 +13,7 @@ function readMoviesController(){
 */
 
 function readMoviesController(){
-    // On fixe l'âge à 0 par défaut (0 = tous publics)
     $age = 0; 
-    
-    // Si l'âge a bien été envoyé dans l'URL par le Front
     if (isset($_REQUEST['age'])) {
         $age = $_REQUEST['age'];
     }
@@ -70,7 +67,6 @@ function addMoviesController(){
   $min_age = $_REQUEST['min_age'];
 
   $ok = addMovie($name, $director, $year, $length, $description, $id_category, $image, $trailer, $min_age);
-  // $ok est le nombre de ligne affecté par l'opération de mise à jour dans la BDD (voir model.php)
   if ($ok != 0){
     return "Le film $name à été ajouté avec succès!";
   }
@@ -81,20 +77,34 @@ function addMoviesController(){
 
 
 function addProfileController(){
-  // On récupère le nom
   $name = $_REQUEST['name'];
   
-  // On récupère l'âge (Attention : ton HTML envoie 'id_age' !)
   $age_restriction = $_REQUEST['age_restriction'];
 
-  // L'avatar n'existe pas dans ton HTML, donc on force une case vide pour que MySQL soit content
   $avatar = ""; 
 
-  // On envoie à la BDD
   $ok = addProfile($name, $avatar, $age_restriction);
   
   if ($ok != 0){
     return "Le profil $name a été ajouté avec succès !";
+  }
+  else{
+    return false;
+  }
+
+}
+
+
+function editProfileController(){
+  $id = $_REQUEST['id'];
+  $name = $_REQUEST['name'];
+  $age_restriction = $_REQUEST['age_restriction'];
+
+
+  $ok = editProfile($id, $name, $age_restriction);
+  
+  if ($ok != 0){
+    return "Le profil  a été modifié avec succès !";
   }
   else{
     return false;

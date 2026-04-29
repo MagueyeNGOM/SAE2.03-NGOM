@@ -21,4 +21,20 @@ DataProfile.addProfile = async function (fdata) {
     return data;
 }
 
+DataProfile.editProfile = async function (fdd) {
+        let config = {
+        method: "POST",
+        body: fdd
+    };
+    let answer = await fetch(HOST_URL + "server/script.php?todo=editprofile", config);
+    let data = await answer.json();
+    return data;
+}
+
+DataProfile.requestProfiles = async function () {
+    let answer = await fetch(HOST_URL + "server/script.php?todo=readprofile");
+    let data = await answer.json();
+    return data;
+}
+
 export {DataProfile};

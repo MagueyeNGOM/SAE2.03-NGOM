@@ -1,0 +1,21 @@
+<div class="editProfil">
+  <form class="editProfil__form">
+
+    <select required name="id">
+      {{optionProfiles}}
+    </select>
+
+    <input required type="text" name="name" placeholder="Modifier le nom du profil" />
+
+    <select required name="age_restriction">
+      {{optionAge}}
+    </select>
+
+    <input
+      onclick="{{handler}}"
+      type="button"
+      value="Modifier le profil"
+      name="todo"
+    />
+  </form>
+</div>

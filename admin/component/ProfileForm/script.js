@@ -14,8 +14,8 @@ ProfileForm.format = function (handler, agesArray) {
   let optionsHtml = "";
   for (let year of agesArray) {
     let option = templateOption;
-    option = option.replace("{{idage}}", year.min_age);
-    option = option.replace("{{minAge}}", year.min_age);
+    option = option.replace("{{idage}}", year.age);
+    option = option.replace("{{minAge}}", year.age);
     optionsHtml += option;
   }
 

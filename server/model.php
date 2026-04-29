@@ -38,7 +38,7 @@ function getAllMovies($age){
 
 function getProfile(){
         $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT name, age_restriction FROM Profile";
+    $sql = "SELECT id, name, age_restriction FROM Profile";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -56,7 +56,7 @@ function getCategory(){
 
 function getAge(){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT DISTINCT min_age FROM Movie ORDER BY min_age ASC";
+    $sql = "SELECT age FROM AgeCategory ORDER BY age ASC";
     $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -91,9 +91,7 @@ function addMovie($name, $director, $year, $length, $description, $id_category, 
     $stmt->bindParam(':image', $image);
     $stmt->bindParam(':trailer', $trailer);
     $stmt->bindParam(':min_age', $min_age);
-    // Exécute la requête SQL
     $stmt->execute();
-    // Récupère les résultats de la requête sous forme d'objets
     return $stmt->rowCount();
 }
 
@@ -103,16 +101,30 @@ function addProfile( $name, $avatar, $age_restriction){
  
     $sql = "INSERT INTO Profile (name, avatar, age_restriction)
             VALUES (:name, :avatar, :age_restriction)";
-    // Prépare la requête SQL
     $stmt = $cnx->prepare($sql);
 
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':avatar', $avatar);
     $stmt->bindParam(':age_restriction', $age_restriction);
 
-    // Exécute la requête SQL
     $stmt->execute();
-    // Récupère les résultats de la requête sous forme d'objets
+    return $stmt->rowCount();
+}
+
+function editProfile($id, $name, $age_restriction){
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = "UPDATE Profile 
+            SET name = :name, age_restriction = :age_restriction 
+            WHERE id = :id";
+
+            
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->bindParam(':name', $name);
+    $stmt->bindParam(':age_restriction', $age_restriction);
+
+    $stmt->execute();
     return $stmt->rowCount();
 }
 
