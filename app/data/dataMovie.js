@@ -39,4 +39,14 @@ DataMovie.requestFavorite = async function (id_profile) {
   return data;
 }
 
+DataMovie.removeFavorite = async function (fdata) {
+  let config = {
+      method: "POST",
+      body: fdata
+  };
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=removefavorite", config);
+  let data = await answer.json();
+  return data;
+};
+
 export { DataMovie };

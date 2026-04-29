@@ -7,8 +7,13 @@ let templateLi = await templateLiFile.text();
 let Movie = {};
 
 Movie.format = function (moviesArray) {
-  if (!moviesArray || moviesArray.length === 0) {
-    return "<p>Aucun film disponible pour le moment.</p>";
+
+    if (moviesArray.length == 0) {
+    return "Votre liste de favoris est vide.";
+  }
+
+  if (moviesArray.length === 0) {
+    return "Aucun film disponible pour le moment.";
   }
 
   let html = "";

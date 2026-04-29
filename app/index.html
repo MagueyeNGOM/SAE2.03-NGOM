@@ -57,9 +57,8 @@
         if(profilActif !== ""){
           let f = await DataMovie.requestFavorite(profilActif);
 
-          if(f.length > 0){
             moviesArray[ "Mes Favoris"] = f;
-          }
+          
         }
         V.renderMovies(moviesArray);
       };
@@ -89,6 +88,17 @@
         if (form.reportValidity()) {
           let fdata = new FormData(form);
           let reponse = await DataMovie.addFavorite(fdata);
+          V.renderLog(reponse);
+        }
+      };
+
+      C.handlerRemoveFavorite = async function () {
+        let form = document.querySelector(".addFav__form");
+        document.querySelector("#id_profile_input").value = profilActif;
+
+        if (form.reportValidity()) {
+          let fdata = new FormData(form);
+          let reponse = await DataMovie.removeFavorite(fdata); 
           V.renderLog(reponse);
         }
       };

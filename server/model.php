@@ -127,6 +127,22 @@ function addFavorite($id_profile, $id_movie){
     return $stmt->rowCount();
 }
 
+function removeFavorite($id_profile, $id_movie){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = "DELETE FROM Favorite 
+            WHERE id_profile = :id_profile 
+            AND id_movie = :id_movie";
+
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_profile', $id_profile);
+    $stmt->bindParam(':id_movie', $id_movie);
+
+    $stmt->execute();
+    return $stmt->rowCount();
+}
+
 
 function checkFavorite($id_profile, $id_movie){
 
