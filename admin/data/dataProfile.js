@@ -1,4 +1,4 @@
-let HOST_URL = "https://mmi.unilim.fr/~ngom14/SAE2.03-NGOM/";
+let HOST_URL = ".";
 
 let DataProfile = {};
 
