@@ -14,9 +14,9 @@
  * DBPWD : Mot de passe pour se connecter à la base de données.
  */
 define("HOST", "localhost");
-define("DBNAME", "SAE203");
-define("DBLOGIN", "usersae203");
-define("DBPWD", "magueye1234");
+define("DBNAME", "ngom14");
+define("DBLOGIN", "ngom14");
+define("DBPWD", "ngom14");
 
 
 function getAllMovies($age){
@@ -131,11 +131,9 @@ function removeFavorite($id_profile, $id_movie){
 
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
  
-    $sql = "DELETE FROM Favorite 
-            WHERE id_profile = :id_profile 
-            AND id_movie = :id_movie";
-
+    $sql = "DELETE FROM Favorite WHERE id_profile = :id_profile AND id_movie = :id_movie";
     $stmt = $cnx->prepare($sql);
+
     $stmt->bindParam(':id_profile', $id_profile);
     $stmt->bindParam(':id_movie', $id_movie);
 

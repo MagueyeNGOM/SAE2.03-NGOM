@@ -1,5 +1,5 @@
 // URL où se trouve le répertoire "server" sur mmi.unilim.fr
-let HOST_URL = "..";
+let HOST_URL = "https://mmi.unilim.fr/~ngom14/SAE2.03-NGOM";
 
 let DataMovie = {};
 
@@ -37,6 +37,16 @@ DataMovie.requestFavorite = async function (id_profile) {
    let answer = await fetch(HOST_URL + "/server/script.php?todo=readfavorite&id_profile=" + id_profile);
   let data = await answer.json();
   return data;
+}
+
+DataMovie.isFavorite = async function (profileId, movieId) {
+  let favorites = await DataMovie.requestFavorite(profileId);
+  for (let i = 0; i < favorites.length; i++) {
+    if (favorites[i].id == movieId) {
+      return true;
+    }
+  }
+  return false;
 }
 
 DataMovie.removeFavorite = async function (fdata) {

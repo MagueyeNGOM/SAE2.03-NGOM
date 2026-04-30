@@ -19,10 +19,11 @@
       import { DataProfile } from "./data/dataProfile.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
-      import { MovieFav } from "./component/MovieFav/script.js";
 
       let moviesArray = await DataMovie.requestMovies();
       let profilActif = null;
+      let listeProfils = [];
+      let profilesArray = [];
 
       // Controleur
       // Rappel, écrire window.C plutôt que let C est nécessaire pour tester depuis la console du navigateur
@@ -32,13 +33,8 @@
       C.handlerDetail = async function (id) {
         let movieData = await DataMovie.requestMovieDetails(id);
         let f = false;
-        if (profilActif !== null && profilActif !== "") {
-          let ff = await DataMovie.requestFavorite(profilActif);
-          for(let i = 0; i < ff.length; i++){
-            if (ff[i].id == id){
-              f = true;
-            }
-          }
+        if (profilActif !== "") {
+          f = await DataMovie.isFavorite(profilActif, id);
         }
         V.renderMovieDetail(movieData, f);
       };
@@ -48,24 +44,19 @@
         profilActif = select.value;
         let age = 0;
         if (profilActif !== "") {
-          let o = document.querySelector("option:checked");
-          age = o.getAttribute("data-age");
+          age = DataProfile.g(profilesArray, profilActif);
         }
-        
         let moviesArray = await DataMovie.requestMovies(age);
-
         if(profilActif !== ""){
           let f = await DataMovie.requestFavorite(profilActif);
-
             moviesArray[ "Mes Favoris"] = f;
-          
         }
         V.renderMovies(moviesArray);
       };
 
       C.start = async function () {
-        let profiles = await DataProfile.read();
-        V.renderNavBar("C.handlerAbout()", profiles);
+        profilesArray = await DataProfile.read();
+        V.renderNavBar("C.handlerAbout()", profilesArray);
         let moviesArray = await DataMovie.requestMovies(0);
         V.renderMovies(moviesArray);
       };
@@ -81,39 +72,30 @@
         C.changeProfile();
       };
 
-      C.handlerAddFavorite = async function () {
-        let form = document.querySelector(".addFav__form");
-        document.querySelector("#id_profile_input").value = profilActif;
-
-        if (form.reportValidity()) {
-          let fdata = new FormData(form);
-          let reponse = await DataMovie.addFavorite(fdata);
-          V.renderLog(reponse);
+      C.handlerAddFavorite = async function (movieId) {
+        if (profilActif === null || profilActif === "") {
+          alert("Sélectionnez un profil pour ajouter un favori.");
+          return;
         }
+        let fdata = new FormData();
+        fdata.append('id_profile', profilActif);
+        fdata.append('id_movie', movieId);
+        let reponse = await DataMovie.addFavorite(fdata);
+        V.renderLog(reponse);
       };
 
-      C.handlerRemoveFavorite = async function () {
-        let form = document.querySelector(".addFav__form");
-        document.querySelector("#id_profile_input").value = profilActif;
-
-        if (form.reportValidity()) {
-          let fdata = new FormData(form);
-          let reponse = await DataMovie.removeFavorite(fdata); 
-          V.renderLog(reponse);
+      C.handlerRemoveFavorite = async function (movieId) {
+        if (profilActif === null || profilActif === "") {
+          alert("Sélectionnez un profil pour retirer un favori.");
+          return;
         }
+        let fdata = new FormData();
+        fdata.append('id_profile', profilActif);
+        fdata.append('id_movie', movieId);
+        let reponse = await DataMovie.removeFavorite(fdata);
+        V.renderLog(reponse);
       };
 
-      /* C.handlerAddFavorite = async function () {
-        let form = document.querySelector(".addFav__form");
-        document.querySelector("#id_profile_input").value = profilActif;
-
-        if (form.reportValidity()) {
-          let fdata = new FormData(form);
-          let reponse = await DataMovie.addFavorite(fdata);
-          V.renderLog(reponse);
-        }
-      };
-  */
 
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
@@ -127,30 +109,18 @@
        */
       V.renderNavBar = function (hAbout, profilesArray) {
         let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format(
-          hAbout,
-          "C.handlerHome()",
-          profilesArray,
-        );
+        header.innerHTML = NavBar.format( hAbout, "C.handlerHome()", profilesArray);
       };
 
       V.renderMovies = function (group) {
         let content = document.querySelector("#content");
-        let finalHtml = "";
-        for (let categoryName in group) {
-          let categoryMovie = group[categoryName];
-          finalHtml += MovieCategory.format(categoryName, categoryMovie);
-        }
-        content.innerHTML = finalHtml;
+        content.innerHTML = MovieCategory.formatAll(group);
+
       };
 
       V.renderMovieDetail = function (movieData, f) {
         let content = document.querySelector("#content");
-
-        let htmlDetail = MovieDetail.format(movieData);
-        let htmlFav = MovieFav.formatButton(movieData.id, f);
-
-        content.innerHTML = htmlDetail + htmlFav;
+        content.innerHTML = MovieDetail.format(movieData, f);
       };
 
       V.renderLog = function (message) {

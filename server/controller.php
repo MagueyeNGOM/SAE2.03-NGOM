@@ -108,15 +108,24 @@ function removeFavoriteController(){
   $id_profile = $_REQUEST['id_profile'];
   $id_movie = $_REQUEST['id_movie'];
 
-  $ok = removeFavorite($id_profile, $id_movie);
+  $existe = checkFavorite($id_profile, $id_movie);
+  
+  if ($existe == 0){
+    return "Le film $id_movie n'est pas dans vos favoris !";
+  }
+  else{ 
+    $ok = removeFavorite($id_profile, $id_movie);
+  }
 
   if ($ok != 0){
-    return "Le film a été retiré de vos favoris.";
-  } else {
+    return "Le film $id_movie a été retiré de vos favoris !";
+  }
+  else{
     return false;
   }
 
 }
+
 
 
 function addProfileController(){
