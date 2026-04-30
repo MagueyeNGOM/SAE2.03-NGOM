@@ -65,14 +65,14 @@ if ( isset($_REQUEST['todo']) ){
         exit();
   }
 
-  if ($data===false){
-    echo json_encode('[error] Controller returns false');
+if ($data===false){
     http_response_code(500);
+    echo json_encode('[error] Controller returns false');
     exit();
   }
 
-  echo json_encode($data);
   http_response_code(200);
+  echo json_encode($data);
   exit();
 }
 
