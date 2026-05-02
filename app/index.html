@@ -19,6 +19,7 @@
       import { DataProfile } from "./data/dataProfile.js";
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
+      import { MovieFeatured } from "./component/MovieFeatured/script.js";
 
       let moviesArray = await DataMovie.requestMovies();
       let profilActif = null;
@@ -47,18 +48,26 @@
           age = DataProfile.g(profilesArray, profilActif);
         }
         let moviesArray = await DataMovie.requestMovies(age);
-        if(profilActif !== ""){
+        let featuredArray = await DataMovie.requestFeatured(age);
+
+        let newMovies = {};
+        if (profilActif !== "") {
           let f = await DataMovie.requestFavorite(profilActif);
-            moviesArray[ "Mes Favoris"] = f;
+          newMovies["Mes Favoris"] = f;
         }
-        V.renderMovies(moviesArray);
+        for (let i in moviesArray) {
+          newMovies[i] = moviesArray[i];
+        }
+        V.renderMovies(newMovies, featuredArray);
       };
 
       C.start = async function () {
         profilesArray = await DataProfile.read();
         V.renderNavBar("C.handlerAbout()", profilesArray);
         let moviesArray = await DataMovie.requestMovies(0);
-        V.renderMovies(moviesArray);
+        let featuredArray = await DataMovie.requestFeatured(0);
+
+        V.renderMovies(moviesArray, featuredArray);
       };
 
       C.handlerAbout = function () {
@@ -73,29 +82,24 @@
       };
 
       C.handlerAddFavorite = async function (movieId) {
-        if (profilActif === null || profilActif === "") {
-          alert("Sélectionnez un profil pour ajouter un favori.");
+        if (profilActif == "") {
+          V.renderLog("Sélectionnez un profil pour ajouter un favori.");
           return;
         }
-        let fdata = new FormData();
-        fdata.append('id_profile', profilActif);
-        fdata.append('id_movie', movieId);
-        let reponse = await DataMovie.addFavorite(fdata);
+        let body = "id_profile=" + profilActif + "&id_movie=" + movieId;
+        let reponse = await DataMovie.addFavorite(body);
         V.renderLog(reponse);
       };
 
       C.handlerRemoveFavorite = async function (movieId) {
-        if (profilActif === null || profilActif === "") {
-          alert("Sélectionnez un profil pour retirer un favori.");
+        if (profilActif == "") {
+          V.renderLog("Sélectionnez un profil pour retirer un favori.");
           return;
         }
-        let fdata = new FormData();
-        fdata.append('id_profile', profilActif);
-        fdata.append('id_movie', movieId);
-        let reponse = await DataMovie.removeFavorite(fdata);
+        let body = "id_profile=" + profilActif + "&id_movie=" + movieId;
+        let reponse = await DataMovie.removeFavorite(body);
         V.renderLog(reponse);
       };
-
 
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
@@ -109,13 +113,16 @@
        */
       V.renderNavBar = function (hAbout, profilesArray) {
         let header = document.querySelector("#header");
-        header.innerHTML = NavBar.format( hAbout, "C.handlerHome()", profilesArray);
+        header.innerHTML = NavBar.format(
+          hAbout,
+          "C.handlerHome()",
+          profilesArray,
+        );
       };
 
       V.renderMovies = function (group) {
         let content = document.querySelector("#content");
         content.innerHTML = MovieCategory.formatAll(group);
-
       };
 
       V.renderMovieDetail = function (movieData, f) {
@@ -124,7 +131,14 @@
       };
 
       V.renderLog = function (message) {
-        alert(message);
+        console.log(message);
+      };
+
+      V.renderMovies = function (group, featured) {
+        let content = document.querySelector("#content");
+        let htmlFeatured = MovieFeatured.format(featured);
+        let htmlCategories = MovieCategory.formatAll(group);
+        content.innerHTML = htmlFeatured + htmlCategories;
       };
 
       C.start();

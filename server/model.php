@@ -176,6 +176,17 @@ function getFavorite($id_profile){
     return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
+function getFeatured($age){
+
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+ 
+    $sql = " SELECT *  FROM Movie WHERE featured = 1 AND min_age <= :age";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':age', $age);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
 function editProfile($id, $name, $age_restriction){
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
  

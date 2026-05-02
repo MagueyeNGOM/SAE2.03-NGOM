@@ -1,0 +1,9 @@
+.grid__container {
+    display: flex; 
+    overflow-x: auto; 
+    scroll-snap-type: x mandatory; 
+    gap: 20px; 
+    padding-bottom: 20px; 
+        scrollbar-width: none; 
+}
+

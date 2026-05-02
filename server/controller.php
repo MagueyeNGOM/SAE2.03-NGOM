@@ -18,6 +18,14 @@ function readFavoritesController(){
     return $favorites;
 }
 
+
+function readFeaturedController(){
+    $age = $_REQUEST['age'];
+    $ft = getFeatured($age);
+    return $ft;
+}
+
+
 function readMoviesController(){
     $age = 0; 
     if (isset($_REQUEST['age'])) {

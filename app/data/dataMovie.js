@@ -23,10 +23,16 @@ DataMovie.requestMovieDetails = async function (id) {
   return data;
 }
 
-DataMovie.addFavorite = async function (fdata) {
+DataMovie.requestFeatured = async function (age) {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readfeatured&age=" + age);
+  let data = await answer.json();
+  return data;
+}
+
+DataMovie.addFavorite = async function (body) {
   let config = {
       method: "POST",
-      body: fdata
+      body: body
   };
   let answer = await fetch(HOST_URL + "/server/script.php?todo=addfavorite", config);
   let data = await answer.json();
@@ -49,10 +55,10 @@ DataMovie.isFavorite = async function (profileId, movieId) {
   return false;
 }
 
-DataMovie.removeFavorite = async function (fdata) {
+DataMovie.removeFavorite = async function (body) {
   let config = {
       method: "POST",
-      body: fdata
+      body: body
   };
   let answer = await fetch(HOST_URL + "/server/script.php?todo=removefavorite", config);
   let data = await answer.json();
