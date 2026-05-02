@@ -28,4 +28,8 @@ MovieFeatured.format = function (moviesArray) {
   return result;
 };
 
+MovieFeatured.formatNoprof = function () {
+  return "Veuillez vous connecter pour accéder à la liste de films";
+}
+
 export { MovieFeatured };

@@ -43,6 +43,10 @@
       C.changeProfile = async function () {
         let select = document.querySelector("#profile-select");
         profilActif = select.value;
+        if (profilActif == "") {
+          V.renderNoProfile();
+          return;
+        }
         let age = 0;
         if (profilActif !== "") {
           age = DataProfile.g(profilesArray, profilActif);
@@ -64,10 +68,7 @@
       C.start = async function () {
         profilesArray = await DataProfile.read();
         V.renderNavBar("C.handlerAbout()", profilesArray);
-        let moviesArray = await DataMovie.requestMovies(0);
-        let featuredArray = await DataMovie.requestFeatured(0);
-
-        V.renderMovies(moviesArray, featuredArray);
+        V.renderNoProfile();
       };
 
       C.handlerAbout = function () {
@@ -132,6 +133,11 @@
 
       V.renderLog = function (message) {
         console.log(message);
+      };
+
+      V.renderNoProfile = function () {
+        let content = document.querySelector("#content");
+        content.innerHTML = MovieFeatured.formatNoprof();;
       };
 
       V.renderMovies = function (group, featured) {
