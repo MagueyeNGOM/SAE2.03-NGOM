@@ -172,14 +172,27 @@ function editProfileController(){
 
 }
 
-function readStatsController(){
-  $stats = [];
-  $stats['total_compte'] = getTotProfil();
-  $stats['moyenne_fav'] = getAvgFilm();
-  $stats['total_films'] = getTotFilm();
-  $stats['film_populaire'] = getMostAddedFilm();
-  $stats['cat_populaire'] = getCatPop();
-    
-  return $stats;
+function readTotProfilController() {
+    $tot = getTotProfil();
+    return $tot;
+}
 
+function readAvgFilmController() {
+    $avg = getAvgFilm();
+    return $avg;
+}
+
+function readTotFilmController() {
+    $tot = getTotFilm();
+    return $tot;
+}
+
+function readMostAddedFilmController() {
+    $most = getMostAddedFilm();
+    return $most;
+}
+
+function readCatPopController() {
+    $cat = getCatPop();
+    return $cat;
 }

@@ -206,38 +206,47 @@ function editProfile($id, $name, $age_restriction){
 
 
 function getTotProfil() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT COUNT(*) AS total_compte FROM Profile";
-	$stmt = $pdo->prepare($sql);
+	$stmt = $cnx->prepare($sql);
 	$stmt->execute();
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 
 function getAvgFilm() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT AVG(nb_fav) FROM (SELECT COUNT(*) AS nb_fav FROM Favorite GROUP BY id_profile) AS nb_favbycompte; ";
-	$stmt = $pdo->prepare($sql);
+	$stmt = $cnx->prepare($sql);
 	$stmt->execute();
 	return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
   function getTotFilm() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT COUNT(*) AS total_films FROM Movie";
-	$stmt = $pdo->prepare($sql);
+	$stmt = $cnx->prepare($sql);
 	$stmt->execute();
 	return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
   function getMostAddedFilm() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
     $sql = "SELECT COUNT(id_movie) AS total_fav FROM Favorite JOIN Movie ON Favorite.id_movie = Movie.id GROUP BY id_movie ORDER BY total_fav DESC" ;
-	$stmt = $pdo->prepare($sql);
+	$stmt = $cnx->prepare($sql);
 	$stmt->execute();
 	return $stmt->fetch(PDO::FETCH_ASSOC);
   }
 
   function getCatPop() {
+    $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
+    $sql = "SELECT Category.name AS category_name, COUNT(*) AS cat_populaire FROM Category 
+    JOIN Movie ON Category.id = Movie.id_category JOIN Favorite ON Movie.id = Favorite.id_movie GROUP BY Category.name ORDER BY cat_populaire DESC";
+    /*
     $sql = "SELECT COUNT(name) AS cat_populaire FROM Category 
     JOIN Movie ON Category.id = Movie.id_category JOIN Favorite ON Movie.id = Favorite.id_movie GROUP BY name ORDER BY cat_populaire DESC";
-    $stmt = $pdo->prepare($sql);
+    */
+    $stmt = $cnx->prepare($sql);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 

@@ -65,4 +65,35 @@ DataMovie.removeFavorite = async function (body) {
   return data;
 };
 
+DataMovie.requestTotProfil = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readtotprofil");
+  let data = await answer.json();
+  return data;
+};
+
+DataMovie.requestAvgFilm = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readavgfilm");
+  let data = await answer.json();
+  return data;
+};
+
+DataMovie.requestTotFilm = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readtotfilm");
+  let data = await answer.json();
+  return data;
+};
+
+DataMovie.requestMostAddedFilm = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readmostaddedfilm");
+  let data = await answer.json();
+  return data;
+};
+
+DataMovie.requestCatPop = async function () {
+  let answer = await fetch(HOST_URL + "/server/script.php?todo=readcatpop");
+  let data = await answer.json();
+  return data;
+};
+
+
 export { DataMovie };

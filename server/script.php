@@ -63,9 +63,28 @@ if ( isset($_REQUEST['todo']) ){
         $data = readFeaturedController();
         break;
 
-      case 'readstats':
-        $data = readStatsController();
+      case 'readtotprofil':
+        $data = readTotProfilController();
         break;
+
+      case 'readavgfilm':
+          $data = readAvgFilmController();
+          break;
+
+      case 'readtotfilm':
+          $data = readTotFilmController();
+          break;
+
+      case 'readmostaddedfilm':
+          $data = readMostAddedFilmController();
+          break;
+          
+      case 'readcatpop':
+          $data = readCatPopController();
+          break;
+
+
+      
       
       default:
         echo json_encode('[error] Unknown todo value');

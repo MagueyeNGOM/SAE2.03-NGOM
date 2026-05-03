@@ -6,9 +6,10 @@ let templateOption = await templateOptionFile.text();
 
 let NavBar = {};
 
-NavBar.format = function (hAbout, hHome, profilesArray) {
+NavBar.format = function (hAbout, hHome, hStats,profilesArray) {
   let html = template;
   html = html.replace("{{hAbout}}", hAbout);
+  html = html.replace("{{hStats}}", hStats);
 
   let optionsHtml = "";
 

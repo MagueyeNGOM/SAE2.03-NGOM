@@ -20,6 +20,7 @@
       import { MovieDetail } from "./component/MovieDetail/script.js";
       import { MovieCategory } from "./component/MovieCategory/script.js";
       import { MovieFeatured } from "./component/MovieFeatured/script.js";
+      import { MovieStat } from "./component/MovieStat/script.js";
 
       let moviesArray = await DataMovie.requestMovies();
       let profilActif = null;
@@ -67,7 +68,7 @@
 
       C.start = async function () {
         profilesArray = await DataProfile.read();
-        V.renderNavBar("C.handlerAbout()", profilesArray);
+        V.renderNavBar("C.handlerAbout()","C.handlerStats()", profilesArray);
         V.renderNoProfile();
       };
 
@@ -102,6 +103,24 @@
         V.renderLog(reponse);
       };
 
+      C.handlerStats = async function () {
+        let totProfil = await DataMovie.requestTotProfil();
+        let avgFilm = await DataMovie.requestAvgFilm();
+        let totFilm = await DataMovie.requestTotFilm();
+        let mostAdded = await DataMovie.requestMostAddedFilm();
+        let catPop = await DataMovie.requestCatPop();
+
+        let htmlStats = MovieStat.format(
+          totProfil,
+          avgFilm,
+          totFilm,
+          mostAdded,
+          catPop,
+        );
+
+        V.renderStats(htmlStats);
+      };
+
       // Vue (contient tout ce qui est relatif à l'affichage)
       window.V = {};
 
@@ -112,11 +131,17 @@
        * Elle sélectionne l'élément HTML avec l'ID "header" et y insère le contenu
        * formaté par le composant NavBar.
        */
-      V.renderNavBar = function (hAbout, profilesArray) {
+
+      V.renderStats = function (htmlStats) {
+        let content = document.querySelector("#content");
+        content.innerHTML = htmlStats;
+      };
+      V.renderNavBar = function (hAbout, hStats, profilesArray) {
         let header = document.querySelector("#header");
         header.innerHTML = NavBar.format(
           hAbout,
           "C.handlerHome()",
+          hStats,
           profilesArray,
         );
       };
@@ -137,7 +162,7 @@
 
       V.renderNoProfile = function () {
         let content = document.querySelector("#content");
-        content.innerHTML = MovieFeatured.formatNoprof();;
+        content.innerHTML = MovieFeatured.formatNoprof();
       };
 
       V.renderMovies = function (group, featured) {

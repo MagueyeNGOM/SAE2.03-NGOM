@@ -10,13 +10,11 @@ MovieStat.format = function (data) {
 
   let html = template;
 
-  // On remplace les étiquettes par les données reçues de ton fetch PHP (qui sera fait dans l'index)
-  // L'astuce Object.values()[0] permet de contourner les noms de colonnes SQL générés par PDO
-  html = html.replaceAll("{{totalCompte}}", Object.values(data.total_compte)[0]);
-  html = html.replaceAll("{{moyenneFav}}", parseFloat(Object.values(data.moyenne_fav)[0]).toFixed(1));
-  html = html.replaceAll("{{totalFilms}}", Object.values(data.total_films)[0]);
-  html = html.replaceAll("{{filmPopulaire}}", Object.values(data.film_populaire)[0]);
-  html = html.replaceAll("{{catPopulaire}}", Object.values(data.cat_populaire)[0]);
+  html = html.replaceAll("{{totalCompte}}", data.totalCompte);
+  html = html.replaceAll("{{moyenneFav}}", data.moyenneFav); 
+  html = html.replaceAll("{{totalFilms}}", data.totalFilms);
+  html = html.replaceAll("{{filmPopulaire}}", data.filmPopulaire);
+  html = html.replaceAll("{{catPopulaire}}", data.catPopulaire);
 
   return html;
 };
