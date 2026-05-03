@@ -110,13 +110,7 @@
         let mostAdded = await DataMovie.requestMostAddedFilm();
         let catPop = await DataMovie.requestCatPop();
 
-        let htmlStats = MovieStat.format(
-          totProfil,
-          avgFilm,
-          totFilm,
-          mostAdded,
-          catPop,
-        );
+        let htmlStats = MovieStat.format(totProfil,avgFilm,totFilm,mostAdded,catPop);
 
         V.renderStats(htmlStats);
       };

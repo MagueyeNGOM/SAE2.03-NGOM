@@ -240,8 +240,7 @@ function getAvgFilm() {
 
   function getCatPop() {
     $cnx = new PDO("mysql:host=".HOST.";dbname=".DBNAME, DBLOGIN, DBPWD);
-    $sql = "SELECT Category.name AS category_name, COUNT(*) AS cat_populaire FROM Category 
-    JOIN Movie ON Category.id = Movie.id_category JOIN Favorite ON Movie.id = Favorite.id_movie GROUP BY Category.name ORDER BY cat_populaire DESC";
+    $sql = "SELECT c.name AS category_name  FROM Category c JOIN Movie m ON c.id = m.id_category  JOIN Favorite f ON m.id = f.id_movie GROUP BY c.name ORDER BY COUNT(*) DESC";
     /*
     $sql = "SELECT COUNT(name) AS cat_populaire FROM Category 
     JOIN Movie ON Category.id = Movie.id_category JOIN Favorite ON Movie.id = Favorite.id_movie GROUP BY name ORDER BY cat_populaire DESC";
