@@ -204,3 +204,42 @@ function editProfile($id, $name, $age_restriction){
     return $stmt->rowCount();
 }
 
+
+function getTotProfil() {
+    $sql = "SELECT COUNT(*) AS total_compte FROM Profile";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+
+function getAvgFilm() {
+    $sql = "SELECT AVG(nb_fav) FROM (SELECT COUNT(*) AS nb_fav FROM Favorite GROUP BY id_profile) AS nb_favbycompte; ";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+  function getTotFilm() {
+    $sql = "SELECT COUNT(*) AS total_films FROM Movie";
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  function getMostAddedFilm() {
+    $sql = "SELECT COUNT(id_movie) AS total_fav FROM Favorite JOIN Movie ON Favorite.id_movie = Movie.id GROUP BY id_movie ORDER BY total_fav DESC" ;
+	$stmt = $pdo->prepare($sql);
+	$stmt->execute();
+	return $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+  function getCatPop() {
+    $sql = "SELECT COUNT(name) AS cat_populaire FROM Category 
+    JOIN Movie ON Category.id = Movie.id_category JOIN Favorite ON Movie.id = Favorite.id_movie GROUP BY name ORDER BY cat_populaire DESC";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+
+
+}

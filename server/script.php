@@ -63,7 +63,10 @@ if ( isset($_REQUEST['todo']) ){
         $data = readFeaturedController();
         break;
 
-
+      case 'readstats':
+        $data = readStatsController();
+        break;
+      
       default:
         echo json_encode('[error] Unknown todo value');
         http_response_code(400);

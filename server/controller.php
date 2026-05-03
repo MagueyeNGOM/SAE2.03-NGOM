@@ -171,3 +171,15 @@ function editProfileController(){
   }
 
 }
+
+function readStatsController(){
+  $stats = [];
+  $stats['total_compte'] = getTotProfil();
+  $stats['moyenne_fav'] = getAvgFilm();
+  $stats['total_films'] = getTotFilm();
+  $stats['film_populaire'] = getMostAddedFilm();
+  $stats['cat_populaire'] = getCatPop();
+    
+  return $stats;
+
+}
